@@ -40,7 +40,8 @@ if(process.env.NODE_ENV=="production"){
 }
 //app.use(express.static("client/build"));
 app.use('/server',router);
-const CONNECTION_URL='mongodb+srv://kaushik2:kaushik2@cluster0.qlzvw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const CONNECTION_URL=process.env.CONNECTION_URL;
+//const CONNECTION_URL='mongodb+srv://kaushik2:kaushik2@cluster0.qlzvw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 //const CONNECTION_URL='mongodb+srv://kaushik2:<password>@cluster0.qlzvw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 //const CONNECTION_URL='mongodb://kaushik2:kaushik2@cluster0-shard-00-00.qlzvw.mongodb.net:27017,cluster0-shard-00-01.qlzvw.mongodb.net:27017,cluster0-shard-00-02.qlzvw.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-14fnxz-shard-0&authSource=admin&retryWrites=true&w=majority'
 const PORT = process.env.PORT || 5000;
