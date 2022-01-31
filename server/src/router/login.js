@@ -2,6 +2,9 @@ import express from 'express';
 import {loginUser} from '../controllers/login.js'
 import {registerUser} from '../controllers/register.js'
 import {getEmail,sendForgotPasswordEmail,resetPassword} from '../controllers/emails.js'
+import { createPost,getPosts,deletePost,likePost, updatePost,getMyPosts} from '../controllers/post.js'
+
+
 
 const router=express.Router();
 
@@ -15,4 +18,11 @@ router.get('/emails/:email',getEmail);
 //router.post('/verify/:email',emailVerify)
 router.get('/forgotPassword/:email',sendForgotPasswordEmail)
 router.post('/resetPassword',resetPassword);
+router.post('/createPost',createPost);
+router.patch('/posts/:id/like',likePost);
+router.patch('/posts/:id/delete',deletePost);
+router.patch('/posts/:id/update',updatePost);
+router.get('/users/user/posts',getMyPosts);
+router.get('/posts',getPosts)
+
 export default router;

@@ -27,6 +27,7 @@ const sendForgetPasswordEmailutil=async(email,token)=>{
             pass: process.env.EMAIL_PASS
         },
     });
+    console.log(process.env.EMAIL_PASS);
     try{
         let info = await transporter.sendMail({
             from: 'kauartsshowcase',

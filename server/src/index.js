@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors';
 import router from './router/login.js';
 import dotenv from 'dotenv';
+import path from "path";
 dotenv.config()
 
 
@@ -28,9 +29,20 @@ app.use(cors());
     res.header("Access-Control-Allow-Methods","GET,POST");
     next();
   });*/
-app.use('/',router);
 
-const CONNECTION_URL='mongodb://kaushik2:kaushik2@cluster0-shard-00-00.qlzvw.mongodb.net:27017,cluster0-shard-00-01.qlzvw.mongodb.net:27017,cluster0-shard-00-02.qlzvw.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-14fnxz-shard-0&authSource=admin&retryWrites=true&w=majority'
+
+if(process.env.NODE_ENV=="production"){
+    app.use(express.static("client/build"));
+    /*app.get("*",(req,res)=>{
+        //__dirname = path.resolve(path.dirname(''));
+        res.sendFile('client/build/index.html');
+    })*/
+}
+//app.use(express.static("client/build"));
+app.use('/server',router);
+const CONNECTION_URL='mongodb+srv://kaushik2:kaushik2@cluster0.qlzvw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+//const CONNECTION_URL='mongodb+srv://kaushik2:<password>@cluster0.qlzvw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+//const CONNECTION_URL='mongodb://kaushik2:kaushik2@cluster0-shard-00-00.qlzvw.mongodb.net:27017,cluster0-shard-00-01.qlzvw.mongodb.net:27017,cluster0-shard-00-02.qlzvw.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-14fnxz-shard-0&authSource=admin&retryWrites=true&w=majority'
 const PORT = process.env.PORT || 5000;
 mongoose.connect(CONNECTION_URL,{ useNewUrlParser: true,useUnifiedTopology: true })
     .then(()=>app.listen(PORT,()=>console.log(`server running at port:${PORT}`)))

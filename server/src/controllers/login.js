@@ -15,7 +15,8 @@ export const loginUser=(req,res)=>{
                 else if(result==false)return res.json({loginSuccess:false,token:''})
                 else if(result==true){
                     const playload={
-                        id:user.email,
+                        id:user._id,
+                        email:user.email,
                         name:user.name
                     };
                     try{

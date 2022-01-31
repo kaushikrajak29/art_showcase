@@ -118,7 +118,7 @@ const verifyPassword=()=>{
     loginUser({email:email,password:password})
     .then(result=>{
         console.log(result.data);
-        if(result.data.loginSuccess==false){
+        if(result.data.loginSuccess===false){
           setWrongPassword(true);
           setWrongPasswordMsg("Wrong Password");
           return;

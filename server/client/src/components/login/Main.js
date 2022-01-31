@@ -11,16 +11,19 @@ import Home from './Home';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import CreatePost from '../createPost/CreatePost';
+import EditPost from '../createPost/EditPost';
+import Account from '../account/Account';
 function Main() {
   const history=useHistory();
   console.log(history.location.pathname.substring(0,14));
-  if(history.location.pathname.substring(0,14)=="/resetPassword"){
+  if(history.location.pathname.substring(0,14)==="/resetPassword"){
     //history.push("/resetPassword");
   }
   else if(localStorage.getItem("token")==null){
     history.push('/login');
   }
   else{
+    //console.log(localStorage.getItem("token"));
     history.push('/home');
   }
   return (
@@ -34,6 +37,8 @@ function Main() {
           <Route path="/forgotPassword" exact><ForgotPassword></ForgotPassword></Route>
           <Route path="/resetPassword"><ResetPassword></ResetPassword></Route>
           <Route path="/users/user/createPost"><CreatePost></CreatePost></Route>
+          <Route path="/posts/:id/edit"><EditPost></EditPost></Route>
+          <Route path="/users/user/account"><Account></Account></Route>
         </Switch>
       </Router>
     </div>
