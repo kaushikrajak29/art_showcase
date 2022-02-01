@@ -1,21 +1,16 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import { Grid } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Grow } from '@material-ui/core';
-import { Container } from '@material-ui/core';
-import Posts from '../posts/Posts.js';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import {useHistory } from "react-router-dom";
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {getPosts} from '../../actions/post.js'
-
-//const store = createStore(reducers, compose(applyMiddleware(thunk)));
+import { IconButton } from '@material-ui/core';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,14 +22,30 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  logo: {
+    maxWidth: 30,
+    marginRight: '10px'
+  }
 }));
 
 export default function MyAppBar() {
-  const [ setEdit] = useState(0);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history=useHistory();
+  const info=useSelector((state)=>state.userinfo.info)
+  //console.log(info);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   
+
+
   const logout=()=>{
     localStorage.clear();
     history.push('/');
@@ -47,27 +58,42 @@ export default function MyAppBar() {
     <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              News
-            </Typography>
-            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>{history.push('/users/user/createPost')}}>createPost</Button>
-            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>{history.push('/users/user/account')}}>MyAcount</Button>
-            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>logout()}>logout</Button>
+            
+            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>{history.push('/home')}}><h3>Home</h3></Button>
+            <Typography variant="h6" className={classes.title}></Typography>
+            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>{history.push('/users/user/createPost')}}><h3>CreatePost</h3></Button>
+            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>{history.push('/users/user/posts')}}><h3>MyPosts</h3></Button>
+            <Button color="inherit" style={{textTransform:"none"}} onClick={()=>logout()}><h3>Logout</h3></Button>
+            <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Name:<i>{info.name}</i></MenuItem>
+                <MenuItem onClick={handleClose}>Email:<i>{info.email}</i></MenuItem>
+              </Menu>
           </Toolbar>
         </AppBar>
-
-        <Grow in>
-        <Container>
-          <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-            <Grid item xs={12} sm={7}>
-              <Posts setEdit={setEdit} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Grow>
     </div>
   );
 }

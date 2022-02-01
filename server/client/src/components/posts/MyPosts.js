@@ -10,7 +10,7 @@ const MyPosts = () => {
   const classes = useStyles();
   //console.log(posts_store.myPosts.length);
 
-  console.log(posts_store);
+  //console.log(posts_store);
   return (
     !posts_store.myPosts.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>

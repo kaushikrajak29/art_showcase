@@ -62,7 +62,7 @@ export default function Signin(props) {
       setWrongEmailMsg("Enter Email");
       res=true;
     }
-    if(isEmpty(password)==true){
+    if(isEmpty(password)===true){
       setWrongPassword(true);
       setWrongPasswordMsg("Enter Password");
       res=true;
@@ -73,7 +73,7 @@ export default function Signin(props) {
     if(isEmpty(email)===false&&validator.isEmail(email)===true){
         try{
           const flag=await isEmailExist();
-          if(flag==false){
+          if(flag===false){
             setWrongEmail(true);
             setWrongEmailMsg("Email is not registered");
             return false;
@@ -90,7 +90,7 @@ export default function Signin(props) {
     }
 }
 const verifyPassword=()=>{
-  if(isEmpty(password)==true){
+  if(isEmpty(password)===true){
     setWrongPassword(true);
     setWrongPasswordMsg("Enter Password");
     return false;
@@ -110,7 +110,7 @@ const verifyPassword=()=>{
     if(isEmptyInput())return;
     try{
       const correctInput=await verifyInput();
-      if(correctInput==false)return;
+      if(correctInput===false)return;
     }catch(error){console.log(error)}
     console.log("submit button clicked");
     try{

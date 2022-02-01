@@ -8,9 +8,9 @@ import useStyles from './styles';
 const Posts = (setEdit) => {
   const posts_store = useSelector((state) => state.posts);
   const classes = useStyles();
-  console.log(posts_store.posts.length);
+  //console.log(posts_store.posts.length);
 
-  console.log(posts_store);
+  //console.log(posts_store);
   return (
     !posts_store.posts.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>

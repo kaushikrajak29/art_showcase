@@ -5,11 +5,11 @@ export const posts=(state = EmptyPost, action) => {
   switch (action.type) {
     case CREATE:
       console.log("in create reducer");
-      console.log(action.payload);
+      //console.log(action.payload);
       return {posts:[...state.posts,action.payload],myPosts:state.myPosts};
     case FETCH_ALL:
-      console.log("in reducer ");
-      console.log(action.payload)
+      console.log("in fetch All reducer ");
+      //console.log(action.payload)
       return {posts:action.payload,myPosts:state.myPosts}
     case FETCH_ONE:
       console.log("in Fetchone reducer");
@@ -19,7 +19,7 @@ export const posts=(state = EmptyPost, action) => {
       return {posts:state.posts.filter((post)=>post._id!==action.payload._id),myPosts:state.myPosts.filter((post)=>post._id!==action.payload._id)};
     case UPDATE:
       console.log("in update reducer");
-      return {posts:state.posts.map((post)=>post._id!==action.payload._id?post:action.payload),myPosts:state.myPosts};
+      return {posts:state.posts.map((post)=>post._id!==action.payload._id?post:action.payload),myPosts:state.myPosts.map((post)=>post._id!==action.payload._id?post:action.payload)};
     case LIKE:
       console.log("in like reducer");
       //console.log(state.posts[0]._id);

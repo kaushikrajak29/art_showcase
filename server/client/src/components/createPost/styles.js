@@ -2,6 +2,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+  root1: {
+    flexGrow: 1,
+  },
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
@@ -24,6 +27,6 @@ export default makeStyles((theme) => ({
   },
   buttonSubmit: {
     marginBottom: 10,
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(1, 0, 1),
   },
 }));

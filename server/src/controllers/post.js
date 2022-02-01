@@ -93,6 +93,40 @@ export const likePost=(req,res)=>{
     })
 }
 
+export const dislikePost=(req,res)=>{
+    console.log("dislike posts");
+    const token =req.body.header.token;
+    //console.log(token);
+    jwt.verify(token,process.env.JWT_KEY,(error,result)=>{
+        if(error||result==null||result.email==null){
+            console.log("wrong token");
+            return res.status(404).json({success:false,msg:"Can not be uploaded"});
+        }else{
+            const {id}=req.params;
+            //console.log(id);
+            Post.findById(id)
+                .then((post)=>{
+                    //console.log(post);
+                    const likedUsers=post.likes.users;
+                    const tempLikedUsers=likedUsers.filter((users)=>users.email!=result.email);
+                    //console.log(tempLikedUsers);
+                    Post.findByIdAndUpdate(id,{likes:{count:tempLikedUsers.length,users:tempLikedUsers}},{new:true})
+                        .then((newpost)=>{
+                            res.status(200).json(newpost);
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                            res.status(404).json("error");
+                        })
+                })
+                .catch((error)=>{
+                    console.log(error);
+                    res.status(404).json("error");
+                })
+        }
+    })
+}
+
 export const deletePost=(req,res)=>{
     console.log("delete post");
     const token =req.body.header.token;

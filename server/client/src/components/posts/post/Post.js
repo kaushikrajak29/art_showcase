@@ -1,31 +1,35 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core/';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import { useState } from 'react';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
-import {likePost,} from '../../../actions/post';
+import { useDispatch, useSelector } from 'react-redux';
+import {dislikePost, likePost,} from '../../../actions/post';
 import useStyles from './styles';
-import { useHistory } from 'react-router-dom';
-import { editPost } from '../../../actions/edit';
+import { useState } from 'react';
 
 
 
 const Post = ({ post,setEdit}) => {
-  const history=useHistory();
   const dispatch = useDispatch();
+  const email=useSelector((state)=>state.userinfo.info.email);
   const classes = useStyles();
-  //const usersLiked=post.likes.users;
-  //const isliked=usersLiked.filter((user)=>user.email==post.)
-  //const [liked,setLiked]=useState(false);
-  const editHandler=()=>{
-    dispatch(editPost(post._id))
-    history.push(`/posts/${post._id}/edit`);
+  const usersLiked=post.likes.users;
+  const isliked=usersLiked.filter((user)=>user.email===email);
+  //console.log(usersLiked);
+  //console.log(isliked.length);
+  const [liked,setLiked]=useState(isliked.length?true:false);
+  //console.log(liked);
+  const likeHandler=()=>{
+    if(liked===false){
+      dispatch(likePost(post._id));
+      setLiked(true);
+    }
+    else{
+      dispatch(dislikePost(post._id));
+      setLiked(false);
+    }
   }
-  /*const likeHandler=()=>{
-
-  }*/
   //console.log(post);
   return (
     <Card className={classes.card}>
@@ -34,9 +38,7 @@ const Post = ({ post,setEdit}) => {
         <Typography variant="h6">{post.email}</Typography>
         <Typography variant="body2">{moment(post.date).fromNow()}</Typography>
       </div>
-      <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size="small" onClick={()=>editHandler()} ><MoreHorizIcon fontSize="default" /></Button>
-      </div>
+      
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary" component="h2">{post.tags}</Typography>
       </div>
@@ -45,7 +47,7 @@ const Post = ({ post,setEdit}) => {
         <Typography variant="body2" color="textSecondary" component="p">{post.about}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={()=>{dispatch(likePost(post._id))}}><ThumbUpAltIcon fontSize="small" /> Like {post.likes.count} </Button>
+        <Button size="small" color="primary" onClick={()=>{likeHandler()}}><ThumbUpAltIcon fontSize="small" /> Like {post.likes.count} </Button>
         
       </CardActions>
     </Card>
