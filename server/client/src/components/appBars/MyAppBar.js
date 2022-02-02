@@ -15,6 +15,7 @@ import Menu from '@mui/material/Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginButtom: theme.spacing(2),
   },
   menuButton: {
     marginRight: theme.spacing(2),

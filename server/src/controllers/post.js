@@ -4,44 +4,38 @@ import jwt from 'jsonwebtoken';
 export const getPosts=(req,res)=>{
     console.log("get posts");
     const token =req.headers.token;
-    //console.log(req);
     jwt.verify(token,process.env.JWT_KEY,(error,result)=>{
         if(error||result==null||result.email==null){
             console.log("wrong token");
             return res.status(404).json({success:false,msg:"Can not be uploaded"});
         }else{
-            //console.log(result);
-            
             Post.find()
                 .then((posts)=>{
-                    //console.log(posts);
                     const resPosts=posts.filter((post)=>post.email!==result.email);
+                    resPosts.sort(function(a,b){
+                        return new Date(b.date) - new Date(a.date);
+                      });
                     return res.status(200).json(resPosts);
                 })
                 .catch((error)=>{
                     console.log(error);
                     return res.staus(404).send("error");
 
-                });
-                
+                });     
         }
     });
-
-
 }
 export const createPost=(req,res)=>{
-    //console.log(req.body);
     const token =req.body.token;
     const data=req.body.data;
-    //console.log(data);
     console.log("create post");
     jwt.verify(token,process.env.JWT_KEY,(error,result)=>{
         if(error||result==null||result.email==null){
             console.log("wrong token");
             return res.json({success:false,msg:"Can not be uploaded"});
         }else{
-            //console.log(result);
             const post=new Post({
+                name:result.name,
                 email:result.email,
                 title:data.title,
                 about:data.about,
@@ -51,7 +45,6 @@ export const createPost=(req,res)=>{
             });
             post.save()
                 .then((post)=>{
-                    //console.log(`sucessfully created an post ${post}`);
                     res.status(200).json(post);
                 })
                 .catch(error=>{
@@ -178,18 +171,17 @@ export const updatePost=(req,res)=>{
 export const getMyPosts=(req,res)=>{
     console.log("get posts");
     const token =req.headers.token;
-    //console.log(req);
     jwt.verify(token,process.env.JWT_KEY,(error,result)=>{
         if(error||result==null||result.email==null){
             console.log("wrong token");
             return res.status(404).json({success:false,msg:"Can not be uploaded"});
         }else{
-            //console.log(result);
-            
             Post.find()
                 .then((posts)=>{
-                    //console.log(posts);
                     const resPosts=posts.filter((post)=>post.email===result.email);
+                    resPosts.sort(function(a,b){
+                        return new Date(b.date) - new Date(a.date);
+                      });
                     return res.status(200).json(resPosts);
                 })
                 .catch((error)=>{

@@ -32,9 +32,9 @@ const sendForgetPasswordEmailutil=async(email,token)=>{
         let info = await transporter.sendMail({
             from: 'kauartsshowcase',
             to: email,
-            subject: "Hello ✔",
-            text: "Hello world?",
+            subject: "Reset Password : KauArtShowCase Account",
             html: `<a href="${process.env.CLIENT_URL}/resetPassword/${token}" > click the link to reset password</a></br>
+                    <p>Or use the below url.</br>
                     <p>${process.env.CLIENT_URL}/resetPassword/${token}</p>`, 
         });
         console.log(info);
