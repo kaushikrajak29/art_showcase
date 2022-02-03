@@ -42,7 +42,7 @@ Your ready to explore the features of the project :)
 
 # Some snapshots of the application
 ![](./images/posts.PNG)
-![](./images/ViewPost.PNG)
-
 ![](./images/homeInSM.PNG)
+![](./images/SingUp.PNG)
 
+You can see all snapshots in images folder.
