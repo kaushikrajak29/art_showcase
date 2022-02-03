@@ -34,8 +34,6 @@ export default function MyAppBar() {
   const classes = useStyles();
   const history=useHistory();
   const info=useSelector((state)=>state.userinfo.info)
-  //console.log(info);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
