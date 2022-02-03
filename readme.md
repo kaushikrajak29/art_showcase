@@ -23,7 +23,7 @@ cd client
 npm install
 npm start
 ```
-Your ready to explore the features of the project :)
+You are ready to explore the features of the project :)
 
 ## Features in the project
 1.SignIn
